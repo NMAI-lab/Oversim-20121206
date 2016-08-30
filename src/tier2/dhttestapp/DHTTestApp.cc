@@ -159,11 +159,12 @@ void DHTTestApp::handlePutResponse(DHTputCAPIResponse* msg,
     }
 
     if (msg->getIsSuccess()) {
+        cout << "DHTTestApp: PUT Success [t="<<simTime()<<"]" << endl;
         RECORD_STATS(numPutSuccess++);
         RECORD_STATS(globalStatistics->addStdDev("DHTTestApp: PUT Latency (s)",
                                SIMTIME_DBL(simTime() - context->requestTime)));
     } else {
-        //cout << "DHTTestApp: PUT failed" << endl;
+        cout << "DHTTestApp: PUT failed [t="<<simTime()<<"]" << endl;
         RECORD_STATS(numPutError++);
     }
 
@@ -184,7 +185,7 @@ void DHTTestApp::handleGetResponse(DHTgetCAPIResponse* msg,
                                SIMTIME_DBL(simTime() - context->requestTime)));
 
     if (!(msg->getIsSuccess())) {
-        //cout << "DHTTestApp: success == false" << endl;
+        cout << "DHTTestApp: GET failed [t="<<simTime()<<"]" << endl;
         RECORD_STATS(numGetError++);
         delete context;
         return;
@@ -195,7 +196,7 @@ void DHTTestApp::handleGetResponse(DHTgetCAPIResponse* msg,
     if (entry == NULL) {
         //unexpected key
         RECORD_STATS(numGetError++);
-        //cout << "DHTTestApp: unexpected key" << endl;
+        cout << "DHTTestApp: GET failed [t="<<simTime()<<"] unexpected key" << endl;
         delete context;
         return;
     }
@@ -208,11 +209,11 @@ void DHTTestApp::handleGetResponse(DHTgetCAPIResponse* msg,
 
         if (msg->getResultArraySize() > 0) {
             RECORD_STATS(numGetError++);
-            //cout << "DHTTestApp: deleted key still available" << endl;
+            cout << "DHTTestApp: GET failed [t="<<simTime()<<"] deleted key still available" << endl;
             return;
         } else {
             RECORD_STATS(numGetSuccess++);
-            //cout << "DHTTestApp: success (1)" << endl;
+            cout << "DHTTestApp: GET success [t="<<simTime()<<"]" << endl;
             return;
         }
     } else {
@@ -220,9 +221,10 @@ void DHTTestApp::handleGetResponse(DHTgetCAPIResponse* msg,
         if ((msg->getResultArraySize() > 0) &&
                 (msg->getResult(0).getValue() == entry->value)) {
             RECORD_STATS(numGetSuccess++);
-            //cout << "DHTTestApp: success (2)" << endl;
+            cout << "DHTTestApp: GET success [t="<<simTime()<<"]" << endl;
             return;
         } else {
+            cout << "DHTTestApp: GET failed [t="<<simTime()<<"]" << endl;
             RECORD_STATS(numGetError++);
 #if 0
             if (msg->getResultArraySize()) {
@@ -297,7 +299,7 @@ void DHTTestApp::handleTraceMessage(cMessage* msg)
 
 void DHTTestApp::handleTimerEvent(cMessage* msg)
 {
-    if (msg->isName("dhttest_put_timer")) {
+    if (msg->isName("dhttest_put_timer")) { //--------put test
         // schedule next timer event
         scheduleAt(simTime() + truncnormal(mean, deviation), msg);
 
@@ -341,7 +343,7 @@ void DHTTestApp::handleTimerEvent(cMessage* msg)
         sendInternalRpcCall(TIER1_COMP, dhtPutMsg,
                 new DHTStatsContext(globalStatistics->isMeasuring(),
                                     simTime(), destKey, dhtPutMsg->getValue()));
-    } else if (msg->isName("dhttest_get_timer")) {
+    } else if (msg->isName("dhttest_get_timer")) {//--------get test
         scheduleAt(simTime() + truncnormal(mean, deviation), msg);
 
         // do nothing if the network is still in the initialization phase

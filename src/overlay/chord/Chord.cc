@@ -788,7 +788,8 @@ void Chord::handleJoinTimerExpired(cMessage* msg)
 
     // schedule next join process in the case this one fails
     cancelEvent(join_timer);
-    scheduleAt(simTime() + joinDelay, msg);
+    //put a bit of randomness in the delay
+    scheduleAt(simTime() + truncnormal(joinDelay,joinDelay*0.1), msg);
 }
 
 
@@ -989,7 +990,7 @@ void Chord::rpcJoin(JoinCall* joinCall)
 
 void Chord::handleRpcJoinResponse(JoinResponse* joinResponse)
 {
-    // determine the numer of successor nodes to add
+    // determine the number of successor nodes to add
     int sucNum = successorListSize - 1;
 
     if (joinResponse->getSucNum() < successorListSize - 1) {

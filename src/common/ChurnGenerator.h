@@ -64,7 +64,7 @@ class ChurnGenerator : public cSimpleModule
     void setNodeType(const NodeType& t) { type = t; }
     const NodeType& getNodeType() { return type; }
     bool init; //!< still in initialization phase?
-    int terminalCount; //!< current number of overlay terminals
+    int terminalCount=0; //!< current number of overlay terminals
 
   protected:
     UnderlayConfigurator* underlayConfigurator;

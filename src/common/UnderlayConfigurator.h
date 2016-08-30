@@ -161,6 +161,12 @@ protected:
     cMessage* endSimulationNotificationTimer; //!< timer to notify nodes that simulation ends soon
     cMessage* endTransitionTimer; //!< timer to signal end of transition time
 
+    //private moved to protected!
+    bool init;
+    unsigned int initCounter;
+    bool simulationEndingSoon;
+    bool transitionTimeFinished;
+
     struct timeval initFinishedTime; //!< timestamp at end of init phase
     struct timeval initStartTime; //!< timestamp at begin of init phase
 
@@ -171,10 +177,8 @@ protected:
     static const char* colorNames[];
 
 private:
-    bool init;
-    bool simulationEndingSoon;
-    bool transitionTimeFinished;
-    unsigned int initCounter;
+
+
 
     void consoleOut(const std::string& text);
 };
