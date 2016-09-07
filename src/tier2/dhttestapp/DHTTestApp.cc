@@ -149,7 +149,7 @@ void DHTTestApp::handlePutResponse(DHTputCAPIResponse* msg,
 {
     DHTEntry entry = {context->value, simTime() + ttl, simTime()};
 
-    globalDhtTestMap->insertEntry(context->key, entry);
+
 
     if (context->measurementPhase == false) {
         // don't count response, if the request was not sent
@@ -159,6 +159,10 @@ void DHTTestApp::handlePutResponse(DHTputCAPIResponse* msg,
     }
 
     if (msg->getIsSuccess()) {
+
+        //only insert key into testmap if it was successfully put.
+        globalDhtTestMap->insertEntry(context->key, entry);
+
         cout << "DHTTestApp: PUT Success [t="<<simTime()<<"]" << endl;
         RECORD_STATS(numPutSuccess++);
         RECORD_STATS(globalStatistics->addStdDev("DHTTestApp: PUT Latency (s)",
@@ -374,7 +378,7 @@ void DHTTestApp::handleTimerEvent(cMessage* msg)
         sendInternalRpcCall(TIER1_COMP, dhtGetMsg,
                 new DHTStatsContext(globalStatistics->isMeasuring(),
                                     simTime(), key));
-    } else if (msg->isName("dhttest_mod_timer")) {
+    } else if (msg->isName("dhttest_mod_timer")) { // ------------- modification timer
         scheduleAt(simTime() + truncnormal(mean, deviation), msg);
 
         // do nothing if the network is still in the initialization phase
