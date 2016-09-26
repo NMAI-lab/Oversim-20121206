@@ -47,8 +47,7 @@ class GlobalDhtTestMap;
  *
  * @author Ingmar Baumgart
  */
-class DHTTestApp : public BaseApp
-{
+class DHTTestApp: public BaseApp {
 private:
     /**
      * A container used by the DHTTestApp to
@@ -56,28 +55,36 @@ private:
      *
      * @author Ingmar Baumgart
      */
-    class DHTStatsContext : public cPolymorphic
-    {
+    class DHTStatsContext: public cPolymorphic {
     public:
         bool measurementPhase;
         simtime_t requestTime;
         OverlayKey key;
         BinaryValue value;
 
-        DHTStatsContext(bool measurementPhase,
-                        simtime_t requestTime,
-                        const OverlayKey& key,
-                        const BinaryValue& value = BinaryValue::UNSPECIFIED_VALUE) :
-            measurementPhase(measurementPhase), requestTime(requestTime),
-            key(key), value(value) {};
+        DHTStatsContext(bool measurementPhase, simtime_t requestTime,
+                const OverlayKey& key, const BinaryValue& value =
+                        BinaryValue::UNSPECIFIED_VALUE) :
+                measurementPhase(measurementPhase), requestTime(requestTime), key(
+                        key), value(value) {
+        }
+        ;
     };
 
     void initializeApp(int stage);
 
+    bool isP2PNSNameCountLessThan4TimesNumNodes();
+
     /**
-     * Get a random key of the hashmap
+     * create a random GET message and send it
      */
-    OverlayKey getRandomKey();
+    void sendRandomGet();
+
+    /**
+     * create a random PUT message and send it
+     * @param useExistingKey whether to use a key that is already populated in the DHT
+     */
+    void sendRandomPut(bool useExistingKey);
 
     /**
      * generate a random human readable binary value
@@ -95,7 +102,7 @@ private:
      * @param context context object used for collecting statistics
      */
     virtual void handleGetResponse(DHTgetCAPIResponse* msg,
-                                   DHTStatsContext* context);
+            DHTStatsContext* context);
 
     /**
      * processes put responses
@@ -106,7 +113,7 @@ private:
      * @param context context object used for collecting statistics
      */
     virtual void handlePutResponse(DHTputCAPIResponse* msg,
-                                   DHTStatsContext* context);
+            DHTStatsContext* context);
 
     /**
      * processes self-messages
@@ -130,7 +137,7 @@ private:
 
     // see RpcListener.h
     void handleRpcResponse(BaseResponseMessage* msg, const RpcState& state,
-                           simtime_t rtt);
+            simtime_t rtt);
 
     UnderlayConfigurator* underlayConfigurator; /**< pointer to UnderlayConfigurator in this node */
 

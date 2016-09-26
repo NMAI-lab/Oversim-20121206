@@ -52,8 +52,7 @@ DHTTestApp::DHTTestApp()
 
 void DHTTestApp::initializeApp(int stage)
 {
-    if (stage != MIN_STAGE_APP)
-        return;
+    if (stage != MIN_STAGE_APP) return;
 
     // fetch parameters
     debugOutput = par("debugOutput");
@@ -64,7 +63,7 @@ void DHTTestApp::initializeApp(int stage)
     deviation = mean / 10;
 
     if (p2pnsTraffic) {
-        ttl = 3600*24*365;
+        ttl = 3600 * 24 * 365;
     } else {
         ttl = par("testTtl");
     }
@@ -73,12 +72,13 @@ void DHTTestApp::initializeApp(int stage)
     underlayConfigurator = UnderlayConfiguratorAccess().get();
     globalStatistics = GlobalStatisticsAccess().get();
 
-    globalDhtTestMap = dynamic_cast<GlobalDhtTestMap*>(simulation.getModuleByPath(
-            "globalObserver.globalFunctions[0].function"));
+    globalDhtTestMap =
+            dynamic_cast<GlobalDhtTestMap*>(simulation.getModuleByPath(
+                    "globalObserver.globalFunctions[0].function"));
 
     if (globalDhtTestMap == NULL) {
         throw cRuntimeError("DHTTestApp::initializeApp(): "
-                                "GlobalDhtTestMap module not found!");
+                            "GlobalDhtTestMap module not found!");
     }
 
     // statistics
@@ -107,14 +107,11 @@ void DHTTestApp::initializeApp(int stage)
     dhttestmod_timer = new cMessage("dhttest_mod_timer");
 
     if (mean > 0) {
-        scheduleAt(simTime() + truncnormal(mean, deviation),
-                   dhttestput_timer);
-        scheduleAt(simTime() + truncnormal(mean + mean / 3,
-                                                      deviation),
-                                                      dhttestget_timer);
-        scheduleAt(simTime() + truncnormal(mean + 2 * mean / 3,
-                                                      deviation),
-                                                      dhttestmod_timer);
+        scheduleAt(simTime() + truncnormal(mean, deviation), dhttestput_timer);
+        scheduleAt(simTime() + truncnormal(mean + mean / 3, deviation),
+                   dhttestget_timer);
+        scheduleAt(simTime() + truncnormal(mean + 2 * mean / 3, deviation),
+                   dhttestmod_timer);
     }
 }
 
@@ -122,34 +119,31 @@ void DHTTestApp::handleRpcResponse(BaseResponseMessage* msg,
                                    const RpcState& state, simtime_t rtt)
 {
     RPC_SWITCH_START(msg)
-    RPC_ON_RESPONSE( DHTputCAPI ) {
-        handlePutResponse(_DHTputCAPIResponse,
-                          check_and_cast<DHTStatsContext*>(state.getContext()));
-        EV << "[DHTTestApp::handleRpcResponse()]\n"
-           << "    DHT Put RPC Response received: id=" << state.getId()
-           << " msg=" << *_DHTputCAPIResponse << " rtt=" << rtt
-           << endl;
-        break;
-    }
-    RPC_ON_RESPONSE(DHTgetCAPI)
-    {
-        handleGetResponse(_DHTgetCAPIResponse,
-                          check_and_cast<DHTStatsContext*>(state.getContext()));
-        EV << "[DHTTestApp::handleRpcResponse()]\n"
-           << "    DHT Get RPC Response received: id=" << state.getId()
-           << " msg=" << *_DHTgetCAPIResponse << " rtt=" << rtt
-           << endl;
-        break;
-    }
-    RPC_SWITCH_END()
+        RPC_ON_RESPONSE( DHTputCAPI) {
+            handlePutResponse(
+                    _DHTputCAPIResponse,
+                    check_and_cast<DHTStatsContext*>(state.getContext()));
+            EV << "[DHTTestApp::handleRpcResponse()]\n"
+               << "    DHT Put RPC Response received: id=" << state.getId()
+               << " msg=" << *_DHTputCAPIResponse << " rtt=" << rtt << endl;
+            break;
+        }
+        RPC_ON_RESPONSE(DHTgetCAPI)
+        {
+            handleGetResponse(
+                    _DHTgetCAPIResponse,
+                    check_and_cast<DHTStatsContext*>(state.getContext()));
+            EV << "[DHTTestApp::handleRpcResponse()]\n"
+               << "    DHT Get RPC Response received: id=" << state.getId()
+               << " msg=" << *_DHTgetCAPIResponse << " rtt=" << rtt << endl;
+            break;
+        }RPC_SWITCH_END()
 }
 
 void DHTTestApp::handlePutResponse(DHTputCAPIResponse* msg,
                                    DHTStatsContext* context)
 {
-    DHTEntry entry = {context->value, simTime() + ttl, simTime()};
-
-
+    DHTEntry entry = { context->value, simTime() + ttl, simTime() };
 
     if (context->measurementPhase == false) {
         // don't count response, if the request was not sent
@@ -163,12 +157,12 @@ void DHTTestApp::handlePutResponse(DHTputCAPIResponse* msg,
         //only insert key into testmap if it was successfully put.
         globalDhtTestMap->insertEntry(context->key, entry);
 
-        cout << "DHTTestApp: PUT Success [t="<<simTime()<<"]" << endl;
+        cout << "DHTTestApp: PUT Success [t=" << simTime() << "]" << endl;
         RECORD_STATS(numPutSuccess++);
-        RECORD_STATS(globalStatistics->addStdDev("DHTTestApp: PUT Latency (s)",
-                               SIMTIME_DBL(simTime() - context->requestTime)));
+        RECORD_STATS(
+                globalStatistics->addStdDev("DHTTestApp: PUT Latency (s)", SIMTIME_DBL(simTime() - context->requestTime)));
     } else {
-        cout << "DHTTestApp: PUT failed [t="<<simTime()<<"]" << endl;
+        cout << "DHTTestApp: PUT failed [t=" << simTime() << "]" << endl;
         RECORD_STATS(numPutError++);
     }
 
@@ -185,11 +179,11 @@ void DHTTestApp::handleGetResponse(DHTgetCAPIResponse* msg,
         return;
     }
 
-    RECORD_STATS(globalStatistics->addStdDev("DHTTestApp: GET Latency (s)",
-                               SIMTIME_DBL(simTime() - context->requestTime)));
+    RECORD_STATS(
+            globalStatistics->addStdDev("DHTTestApp: GET Latency (s)", SIMTIME_DBL(simTime() - context->requestTime)));
 
     if (!(msg->getIsSuccess())) {
-        cout << "DHTTestApp: GET failed [t="<<simTime()<<"]" << endl;
+        cout << "DHTTestApp: GET failed [t=" << simTime() << "]" << endl;
         RECORD_STATS(numGetError++);
         delete context;
         return;
@@ -200,7 +194,8 @@ void DHTTestApp::handleGetResponse(DHTgetCAPIResponse* msg,
     if (entry == NULL) {
         //unexpected key
         RECORD_STATS(numGetError++);
-        cout << "DHTTestApp: GET failed [t="<<simTime()<<"] unexpected key" << endl;
+        cout << "DHTTestApp: GET failed [t=" << simTime() << "] unexpected key"
+             << endl;
         delete context;
         return;
     }
@@ -213,22 +208,23 @@ void DHTTestApp::handleGetResponse(DHTgetCAPIResponse* msg,
 
         if (msg->getResultArraySize() > 0) {
             RECORD_STATS(numGetError++);
-            cout << "DHTTestApp: GET failed [t="<<simTime()<<"] deleted key still available" << endl;
+            cout << "DHTTestApp: GET failed [t=" << simTime()
+                 << "] deleted key still available" << endl;
             return;
         } else {
             RECORD_STATS(numGetSuccess++);
-            cout << "DHTTestApp: GET success [t="<<simTime()<<"]" << endl;
+            cout << "DHTTestApp: GET success [t=" << simTime() << "]" << endl;
             return;
         }
     } else {
         delete context;
-        if ((msg->getResultArraySize() > 0) &&
-                (msg->getResult(0).getValue() == entry->value)) {
+        if ((msg->getResultArraySize() > 0)
+                && (msg->getResult(0).getValue() == entry->value)) {
             RECORD_STATS(numGetSuccess++);
-            cout << "DHTTestApp: GET success [t="<<simTime()<<"]" << endl;
+            cout << "DHTTestApp: GET success [t=" << simTime() << "]" << endl;
             return;
         } else {
-            cout << "DHTTestApp: GET failed [t="<<simTime()<<"]" << endl;
+            cout << "DHTTestApp: GET failed [t=" << simTime() << "]" << endl;
             RECORD_STATS(numGetError++);
 #if 0
             if (msg->getResultArraySize()) {
@@ -259,8 +255,8 @@ void DHTTestApp::handleTraceMessage(cMessage* msg)
         char* buf = cmd + 4;
 
         while (!isspace(buf[0])) {
-            if (buf[0] == '\0')
-                throw cRuntimeError("Error parsing PUT command");
+            if (buf[0] == '\0') throw cRuntimeError(
+                    "Error parsing PUT command");
             buf++;
         }
 
@@ -278,9 +274,11 @@ void DHTTestApp::handleTraceMessage(cMessage* msg)
         dhtPutMsg->setTtl(ttl);
         dhtPutMsg->setIsModifiable(true);
         RECORD_STATS(numSent++; numPutSent++);
-        sendInternalRpcCall(TIER1_COMP, dhtPutMsg,
-                new DHTStatsContext(globalStatistics->isMeasuring(),
-                                    simTime(), destKey, buf));
+        sendInternalRpcCall(
+                TIER1_COMP,
+                dhtPutMsg,
+                new DHTStatsContext(globalStatistics->isMeasuring(), simTime(),
+                                    destKey, buf));
     } else if (strncmp(cmd, "GET ", 4) == 0) {
         // Get key
         BinaryValue b(cmd + 4);
@@ -289,12 +287,14 @@ void DHTTestApp::handleTraceMessage(cMessage* msg)
         DHTgetCAPICall* dhtGetMsg = new DHTgetCAPICall();
         dhtGetMsg->setKey(key);
         RECORD_STATS(numSent++; numGetSent++);
-        sendInternalRpcCall(TIER1_COMP, dhtGetMsg,
-                new DHTStatsContext(globalStatistics->isMeasuring(),
-                                    simTime(), key));
+        sendInternalRpcCall(
+                TIER1_COMP,
+                dhtGetMsg,
+                new DHTStatsContext(globalStatistics->isMeasuring(), simTime(),
+                                    key));
     } else {
         throw cRuntimeError("Unknown trace command; "
-                                "only GET and PUT are allowed");
+                            "only GET and PUT are allowed");
     }
 
     delete[] cmd;
@@ -303,138 +303,102 @@ void DHTTestApp::handleTraceMessage(cMessage* msg)
 
 void DHTTestApp::handleTimerEvent(cMessage* msg)
 {
-    if (msg->isName("dhttest_put_timer")) { //--------put test
-        // schedule next timer event
-        scheduleAt(simTime() + truncnormal(mean, deviation), msg);
+    bool isPutTimer = msg->isName("dhttest_put_timer");
+    bool isGetTimer = msg->isName("dhttest_get_timer");
+    bool isModTimer = msg->isName("dhttest_mod_timer");
 
-        // do nothing if the network is still in the initialization phase
-        if (((!activeNetwInitPhase) && (underlayConfigurator->isInInitPhase()))
-                || underlayConfigurator->isSimulationEndingSoon()
-                || nodeIsLeavingSoon)
-            return;
+    if (!(isPutTimer || isGetTimer || isModTimer)) {
+        return;
+    }
 
+    // schedule next timer event
+    scheduleAt(simTime() + truncnormal(mean, deviation), msg);
+
+    // do nothing if the network is still in the initialization phase
+    if (((!activeNetwInitPhase) && (underlayConfigurator->isInInitPhase()))
+            || underlayConfigurator->isSimulationEndingSoon()
+            || nodeIsLeavingSoon) {
+        return;
+    }
+
+    if (isPutTimer) { //--------put test
         if (p2pnsTraffic) {
-            if (globalDhtTestMap->p2pnsNameCount < 4*globalNodeList->getNumNodes()) {
+            if (isP2PNSNameCountLessThan4TimesNumNodes()) {
                 for (int i = 0; i < 4; i++) {
-                    // create a put test message with random destination key
-                    OverlayKey destKey = OverlayKey::random();
-                    DHTputCAPICall* dhtPutMsg = new DHTputCAPICall();
-                    dhtPutMsg->setKey(destKey);
-                    dhtPutMsg->setValue(generateRandomValue());
-                    dhtPutMsg->setTtl(ttl);
-                    dhtPutMsg->setIsModifiable(true);
-
-                    RECORD_STATS(numSent++; numPutSent++);
-                    sendInternalRpcCall(TIER1_COMP, dhtPutMsg,
-                            new DHTStatsContext(globalStatistics->isMeasuring(),
-                                                simTime(), destKey, dhtPutMsg->getValue()));
+                    sendRandomPut(false);
                     globalDhtTestMap->p2pnsNameCount++;
                 }
             }
             cancelEvent(msg);
+        } else {
+            sendRandomPut(false);
+        }
+    } else if (isGetTimer) { //--------get test
+        if (p2pnsTraffic && (uniform(0, 1) > ((double) mean / 1800.0))) {
             return;
         }
-
-        // create a put test message with random destination key
-        OverlayKey destKey = OverlayKey::random();
-        DHTputCAPICall* dhtPutMsg = new DHTputCAPICall();
-        dhtPutMsg->setKey(destKey);
-        dhtPutMsg->setValue(generateRandomValue());
-        dhtPutMsg->setTtl(ttl);
-        dhtPutMsg->setIsModifiable(true);
-
-        RECORD_STATS(numSent++; numPutSent++);
-        sendInternalRpcCall(TIER1_COMP, dhtPutMsg,
-                new DHTStatsContext(globalStatistics->isMeasuring(),
-                                    simTime(), destKey, dhtPutMsg->getValue()));
-    } else if (msg->isName("dhttest_get_timer")) {//--------get test
-        scheduleAt(simTime() + truncnormal(mean, deviation), msg);
-
-        // do nothing if the network is still in the initialization phase
-        if (((!activeNetwInitPhase) && (underlayConfigurator->isInInitPhase()))
-                || underlayConfigurator->isSimulationEndingSoon()
-                || nodeIsLeavingSoon) {
-            return;
-        }
-
-        if (p2pnsTraffic && (uniform(0, 1) > ((double)mean/1800.0))) {
-            return;
-        }
-
-        const OverlayKey& key = globalDhtTestMap->getRandomKey();
-
-        if (key.isUnspecified()) {
-            EV << "[DHTTestApp::handleTimerEvent() @ " << thisNode.getIp()
-               << " (" << thisNode.getKey().toString(16) << ")]\n"
-               << "    Error: No key available in global DHT test map!"
-               << endl;
-            return;
-        }
-
-        DHTgetCAPICall* dhtGetMsg = new DHTgetCAPICall();
-        dhtGetMsg->setKey(key);
-        RECORD_STATS(numSent++; numGetSent++);
-
-        sendInternalRpcCall(TIER1_COMP, dhtGetMsg,
-                new DHTStatsContext(globalStatistics->isMeasuring(),
-                                    simTime(), key));
-    } else if (msg->isName("dhttest_mod_timer")) { // ------------- modification timer
-        scheduleAt(simTime() + truncnormal(mean, deviation), msg);
-
-        // do nothing if the network is still in the initialization phase
-        if (((!activeNetwInitPhase) && (underlayConfigurator->isInInitPhase()))
-                || underlayConfigurator->isSimulationEndingSoon()
-                || nodeIsLeavingSoon) {
-            return;
-        }
-
+        sendRandomGet();
+    } else if (isModTimer) { // ------------- modification timer
         if (p2pnsTraffic) {
-            if (globalDhtTestMap->p2pnsNameCount >= 4*globalNodeList->getNumNodes()) {
-                const OverlayKey& key = globalDhtTestMap->getRandomKey();
-
-                if (key.isUnspecified())
-                    return;
-
-                DHTputCAPICall* dhtPutMsg = new DHTputCAPICall();
-                dhtPutMsg->setKey(key);
-                dhtPutMsg->setValue(generateRandomValue());
-                dhtPutMsg->setTtl(ttl);
-                dhtPutMsg->setIsModifiable(true);
-
-                RECORD_STATS(numSent++; numPutSent++);
-                sendInternalRpcCall(TIER1_COMP, dhtPutMsg,
-                        new DHTStatsContext(globalStatistics->isMeasuring(),
-                                            simTime(), key, dhtPutMsg->getValue()));
+            if (!isP2PNSNameCountLessThan4TimesNumNodes()) {
+                sendRandomPut(true);
             }
             cancelEvent(msg);
-            return;
+        } else {
+            sendRandomPut(true);
         }
-
-        const OverlayKey& key = globalDhtTestMap->getRandomKey();
-
-        if (key.isUnspecified())
-            return;
-#if 0
-        const DHTEntry* entry = globalDhtTestMap->findEntry(key);
-        if (entry->insertiontime + 10.0 > simTime()) {
-            std::cout << "avoided early get" << std::endl;
-            return;
-        }
-#endif
-
-        DHTputCAPICall* dhtPutMsg = new DHTputCAPICall();
-        dhtPutMsg->setKey(key);
-        dhtPutMsg->setValue(generateRandomValue());
-        dhtPutMsg->setTtl(ttl);
-        dhtPutMsg->setIsModifiable(true);
-
-        RECORD_STATS(numSent++; numPutSent++);
-        sendInternalRpcCall(TIER1_COMP, dhtPutMsg,
-                new DHTStatsContext(globalStatistics->isMeasuring(),
-                                    simTime(), key, dhtPutMsg->getValue()));
     }
 }
 
+bool DHTTestApp::isP2PNSNameCountLessThan4TimesNumNodes()
+{
+    return globalDhtTestMap->p2pnsNameCount < 4 * globalNodeList->getNumNodes();
+}
+
+void DHTTestApp::sendRandomGet()
+{
+    const OverlayKey& key = globalDhtTestMap->getRandomKey();
+
+    if (key.isUnspecified()) {
+        EV << "[DHTTestApp::handleTimerEvent() @ " << thisNode.getIp() << " ("
+           << thisNode.getKey().toString(16) << ")]\n"
+           << "    Error: No key available in global DHT test map!" << endl;
+        return;
+    }
+
+    DHTgetCAPICall* dhtGetMsg = new DHTgetCAPICall();
+    dhtGetMsg->setKey(key);
+    RECORD_STATS(numSent++; numGetSent++);
+
+    sendInternalRpcCall(
+            TIER1_COMP,
+            dhtGetMsg,
+            new DHTStatsContext(globalStatistics->isMeasuring(), simTime(),
+                                key));
+}
+
+void DHTTestApp::sendRandomPut(bool useExistingKey)
+{
+    // create a put test message with random destination key
+    OverlayKey destKey =
+            useExistingKey ? globalDhtTestMap->getRandomKey() :
+                    OverlayKey::random();
+    if (destKey.isUnspecified()) {
+        return;
+    }
+    DHTputCAPICall* dhtPutMsg = new DHTputCAPICall();
+    dhtPutMsg->setKey(destKey);
+    dhtPutMsg->setValue(generateRandomValue());
+    dhtPutMsg->setTtl(ttl);
+    dhtPutMsg->setIsModifiable(true);
+
+    RECORD_STATS(numSent++; numPutSent++);
+    sendInternalRpcCall(
+            TIER1_COMP,
+            dhtPutMsg,
+            new DHTStatsContext(globalStatistics->isMeasuring(), simTime(),
+                                destKey, dhtPutMsg->getValue()));
+}
 
 BinaryValue DHTTestApp::generateRandomValue()
 {
@@ -476,9 +440,10 @@ void DHTTestApp::finishApp()
                                     numPutSuccess / time);
 
         if ((numGetSuccess + numGetError) > 0) {
-            globalStatistics->addStdDev("DHTTestApp: GET Success Ratio",
-                                        (double) numGetSuccess
-                                        / (double) (numGetSuccess + numGetError));
+            globalStatistics->addStdDev(
+                    "DHTTestApp: GET Success Ratio",
+                    (double) numGetSuccess
+                            / (double) (numGetSuccess + numGetError));
         }
     }
 }
