@@ -252,6 +252,24 @@ OverlayKey& OverlayKey::operator+=( const OverlayKey& rhs )
     return *this;
 }
 
+// mul assign operator
+OverlayKey& OverlayKey::operator*=( const OverlayKey& rhs )
+{
+    mpn_mul_n((mp_limb_t*)key, (mp_limb_t*)key, (mp_limb_t*)rhs.key, aSize);
+    trim();
+    isUnspec = false;
+    return *this;
+}
+
+// div assign operator
+OverlayKey& OverlayKey::operator/=( const OverlayKey& rhs )
+{
+    mpn_divrem_1((mp_limb_t*)key, 0, (mp_limb_t*)key, aSize, *(mp_limb_t*)rhs.key);
+    trim();
+    isUnspec = false;
+    return *this;
+}
+
 // sub assign operator
 OverlayKey& OverlayKey::operator-=( const OverlayKey& rhs )
 {
@@ -274,6 +292,22 @@ OverlayKey OverlayKey::operator-(const OverlayKey& rhs) const
 {
     OverlayKey result = *this;
     result -= rhs;
+    return result;
+}
+
+// mul operator
+OverlayKey OverlayKey::operator*(const OverlayKey& rhs) const
+{
+    OverlayKey result = *this;
+    result *= rhs;
+    return result;
+}
+
+// div operator
+OverlayKey OverlayKey::operator/(const OverlayKey& rhs) const
+{
+    OverlayKey result = *this;
+    result /= rhs;
     return result;
 }
 
@@ -747,10 +781,14 @@ void OverlayKey::test()
          <<  KeyRingMetric().distance(OverlayKey::ONE, OverlayKey::getMax()) << endl;
     cout << "KeyCwRingMetric::distance(1, max)="
          <<  KeyCwRingMetric().distance(OverlayKey::ONE, OverlayKey::getMax()) << endl;
+    cout << "KeyUniRingMetric::distance(1, max)="
+         <<  KeyUniRingMetric().distance(OverlayKey::ONE, OverlayKey::getMax()) << endl;
     cout << "KeyRingMetric::distance(max, 1)="
          <<  KeyRingMetric().distance(OverlayKey::getMax(), OverlayKey::ONE) << endl;
     cout << "KeyCwRingMetric::distance(max, 1)="
          <<  KeyCwRingMetric().distance(OverlayKey::getMax(), OverlayKey::ONE) << endl;
+    cout << "KeyUniRingMetric::distance(max, 1)="
+         <<  KeyUniRingMetric().distance(OverlayKey::getMax(), OverlayKey::ONE) << endl;
 
     // suffix and log2 test
     cout << endl << "--- RandomSuffix and log2 test ..." << endl;

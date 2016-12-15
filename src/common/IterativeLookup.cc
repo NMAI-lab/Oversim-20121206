@@ -722,6 +722,11 @@ const NodeVector& IterativeLookup::getResult() const
     return siblings;
 }
 
+const OverlayKey& IterativeLookup::getKey() const
+{
+    return key;
+}
+
 bool IterativeLookup::isValid() const
 {
     return success && finished;
