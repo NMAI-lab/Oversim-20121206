@@ -1,14 +1,14 @@
 version 2
-run EpiChord-0-20161215-10:21:25-9900
+run EpiChord-0-20161219-12:47:06-6012
 attr configname EpiChord
-attr datetime 20161215-10:21:25
+attr datetime 20161219-12:47:06
 attr experiment EpiChord
 attr inifile omnetpp.ini
 attr iterationvars ""
 attr iterationvars2 $repetition=0
 attr measurement ""
 attr network oversim.underlay.simpleunderlay.SimpleUnderlayNetwork
-attr processid 9900
+attr processid 6012
 attr repetition 0
 attr replication #0
 attr resultdir results
@@ -37,159 +37,10 @@ attr title  "packets received, vector(packetBytes)"
 vector 8  SimpleUnderlayNetwork.overlayTerminal[1].udp  passedUpPk:vector(count)  ETV
 attr interpolationmode  none
 attr title  "packets passed up, vector(count)"
-vector 11  SimpleUnderlayNetwork.overlayTerminal[2].udp  sentPk:vector(packetBytes)  ETV
-attr interpolationmode  none
-attr source  sentPk
-attr title  "packets sent, vector(packetBytes)"
-vector 12  SimpleUnderlayNetwork.overlayTerminal[2].udp  rcvdPk:vector(packetBytes)  ETV
-attr interpolationmode  none
-attr source  rcvdPk
-attr title  "packets received, vector(packetBytes)"
-vector 13  SimpleUnderlayNetwork.overlayTerminal[2].udp  passedUpPk:vector(count)  ETV
-attr interpolationmode  none
-attr title  "packets passed up, vector(count)"
-vector 16  SimpleUnderlayNetwork.overlayTerminal[3].udp  sentPk:vector(packetBytes)  ETV
-attr interpolationmode  none
-attr source  sentPk
-attr title  "packets sent, vector(packetBytes)"
-vector 17  SimpleUnderlayNetwork.overlayTerminal[3].udp  rcvdPk:vector(packetBytes)  ETV
-attr interpolationmode  none
-attr source  rcvdPk
-attr title  "packets received, vector(packetBytes)"
-vector 18  SimpleUnderlayNetwork.overlayTerminal[3].udp  passedUpPk:vector(count)  ETV
-attr interpolationmode  none
-attr title  "packets passed up, vector(count)"
-vector 21  SimpleUnderlayNetwork.overlayTerminal[4].udp  sentPk:vector(packetBytes)  ETV
-attr interpolationmode  none
-attr source  sentPk
-attr title  "packets sent, vector(packetBytes)"
-vector 22  SimpleUnderlayNetwork.overlayTerminal[4].udp  rcvdPk:vector(packetBytes)  ETV
-attr interpolationmode  none
-attr source  rcvdPk
-attr title  "packets received, vector(packetBytes)"
-vector 23  SimpleUnderlayNetwork.overlayTerminal[4].udp  passedUpPk:vector(count)  ETV
-attr interpolationmode  none
-attr title  "packets passed up, vector(count)"
-vector 26  SimpleUnderlayNetwork.overlayTerminal[5].udp  sentPk:vector(packetBytes)  ETV
-attr interpolationmode  none
-attr source  sentPk
-attr title  "packets sent, vector(packetBytes)"
-vector 31  SimpleUnderlayNetwork.overlayTerminal[6].udp  sentPk:vector(packetBytes)  ETV
-attr interpolationmode  none
-attr source  sentPk
-attr title  "packets sent, vector(packetBytes)"
-vector 32  SimpleUnderlayNetwork.overlayTerminal[6].udp  rcvdPk:vector(packetBytes)  ETV
-attr interpolationmode  none
-attr source  rcvdPk
-attr title  "packets received, vector(packetBytes)"
-vector 33  SimpleUnderlayNetwork.overlayTerminal[6].udp  passedUpPk:vector(count)  ETV
-attr interpolationmode  none
-attr title  "packets passed up, vector(count)"
-vector 27  SimpleUnderlayNetwork.overlayTerminal[5].udp  rcvdPk:vector(packetBytes)  ETV
-attr interpolationmode  none
-attr source  rcvdPk
-attr title  "packets received, vector(packetBytes)"
-vector 28  SimpleUnderlayNetwork.overlayTerminal[5].udp  passedUpPk:vector(count)  ETV
-attr interpolationmode  none
-attr title  "packets passed up, vector(count)"
 1	44	0.505525443	171
-1	57	0.785634598	40
-1	81	1.254241172	250
-1	96	1.428368448	40
-1	162	3.023229597	122
-1	170	3.291461761	329
-1	187	3.535740948	40
-1	243	5.336502263	95
-1	253	5.506529335	356
-1	286	5.869342108	40
 2	40	0.505525443	93
-2	55	0.785634598	40
-2	77	1.254241172	93
-2	94	1.428368448	40
-2	160	3.023229597	64
-2	166	3.291461761	93
-2	185	3.535740948	40
-2	241	5.336502263	64
-2	247	5.506529335	93
-2	284	5.869342108	40
 3	40	0.505525443	1
-3	55	0.785634598	2
-3	77	1.254241172	3
-3	94	1.428368448	4
-3	160	3.023229597	5
-3	166	3.291461761	6
-3	185	3.535740948	7
-3	241	5.336502263	8
-3	247	5.506529335	9
-3	284	5.869342108	10
 6	39	0.367472188	93
 6	54	0.639875609	40
-6	159	2.886957255	64
-6	165	3.152369333	93
-6	220	5.084461389	68
 7	45	0.639875609	171
-7	58	0.92089156	40
-7	157	2.886957255	93
-7	163	3.152369333	122
-7	216	5.084461389	65
 8	45	0.639875609	1
-8	58	0.92089156	2
-8	157	2.886957255	3
-8	163	3.152369333	4
-8	216	5.084461389	5
-11	76	1.169688964	93
-11	93	1.342724642	40
-11	120	1.943971509	329
-11	137	2.148360338	40
-11	209	4.701360747	66
-11	215	4.916835648	65
-11	223	5.252789985	64
-11	246	5.431572811	65
-11	279	5.764617504	93
-12	82	1.342724642	250
-12	97	1.528446929	40
-12	116	1.943971509	93
-12	135	2.148360338	40
-12	207	4.701360747	93
-12	213	4.916835648	95
-12	221	5.252789985	68
-12	244	5.431572811	95
-12	277	5.764617504	122
-13	82	1.342724642	1
-13	97	1.528446929	2
-13	116	1.943971509	3
-13	135	2.148360338	4
-13	207	4.701360747	5
-13	213	4.916835648	6
-13	221	5.252789985	7
-13	244	5.431572811	8
-13	277	5.764617504	9
-16	115	1.830160326	93
-16	134	2.047775735	40
-16	212	4.811622934	95
-17	121	2.047775735	329
-17	138	2.266394203	40
-17	210	4.811622934	66
-18	121	2.047775735	1
-18	138	2.266394203	2
-18	210	4.811622934	3
-21	156	2.59782319	93
-21	184	3.417713987	40
-21	256	5.601772772	122
-21	293	5.928875306	356
-22	171	3.417713987	329
-22	188	3.664275327	40
-22	254	5.601772772	65
-22	287	5.928875306	93
-23	171	3.417713987	1
-23	188	3.664275327	2
-23	254	5.601772772	3
-23	287	5.928875306	4
-26	206	4.479233248	93
-26	313	5.997056085	40
-27	294	5.997056085	356
-28	294	5.997056085	1
-31	240	5.30940092	93
-31	276	5.68750529	40
-32	257	5.68750529	356
-33	257	5.68750529	1

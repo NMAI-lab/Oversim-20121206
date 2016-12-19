@@ -329,11 +329,15 @@ void EpiChord::handleJoinTimerExpired(cMessage* msg)
 	EpiChordJoinCall* call = new EpiChordJoinCall("EpiChordJoinCall");
 	call->setBitLength(EPICHORD_JOINCALL_L(call));
 
-	sendRouteRpcCall(OVERLAY_COMP, bootstrapNode, thisNode.getKey(), call, NULL, defaultRoutingType, joinDelay);
+    RoutingType routingType = (defaultRoutingType == FULL_RECURSIVE_ROUTING ||
+                               defaultRoutingType == RECURSIVE_SOURCE_ROUTING) ?
+                              SEMI_RECURSIVE_ROUTING : defaultRoutingType;
+
+	sendRouteRpcCall(OVERLAY_COMP, bootstrapNode, thisNode.getKey(), call, NULL, routingType, joinDelay);
 
 	// schedule next bootstrap process in the case this one fails
 	cancelEvent(join_timer);
-	scheduleAt(simTime() + joinDelay, msg);
+	scheduleAt(simTime() + truncnormal(joinDelay,joinDelay*0.1), msg);
 }
 
 void EpiChord::handleStabilizeTimerExpired(cMessage* msg)
@@ -646,7 +650,11 @@ void EpiChord::joinForeignPartition(const NodeHandle &node)
 
 	this->receiveNewNode(node, true, LOCAL, simTime());
 
-	sendRouteRpcCall(OVERLAY_COMP, node, thisNode.getKey(), call, NULL, defaultRoutingType, joinDelay);
+	RoutingType routingType = (defaultRoutingType == FULL_RECURSIVE_ROUTING ||
+	                               defaultRoutingType == RECURSIVE_SOURCE_ROUTING) ?
+	                              SEMI_RECURSIVE_ROUTING : defaultRoutingType;
+
+	sendRouteRpcCall(OVERLAY_COMP, node, thisNode.getKey(), call, NULL, routingType, joinDelay);
 }
 
 bool EpiChord::isSiblingFor(const NodeHandle& node, const OverlayKey& key, int numSiblings, bool* err)

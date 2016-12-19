@@ -1,21 +1,21 @@
 version 2
-run EpiChord-0-20161215-10:21:25-9900
+run EpiChord-0-20161219-12:47:06-6012
 attr configname EpiChord
-attr datetime 20161215-10:21:25
+attr datetime 20161219-12:47:06
 attr experiment EpiChord
 attr inifile omnetpp.ini
 attr iterationvars ""
 attr iterationvars2 $repetition=0
 attr measurement ""
 attr network oversim.underlay.simpleunderlay.SimpleUnderlayNetwork
-attr processid 9900
+attr processid 6012
 attr repetition 0
 attr replication #0
 attr resultdir results
 attr runnumber 0
 attr seedset 0
 
-scalar SimpleUnderlayNetwork.underlayConfigurator 	"Terminals added" 	7
+scalar SimpleUnderlayNetwork.underlayConfigurator 	"Terminals added" 	2
 scalar SimpleUnderlayNetwork.underlayConfigurator 	"Terminals removed" 	0
 scalar SimpleUnderlayNetwork.overlayTerminal[0].udp 	droppedPkBadChecksum:count 	0
 attr interpolationmode  none
@@ -23,22 +23,22 @@ attr title  "packets dropped (checksum error), count"
 scalar SimpleUnderlayNetwork.overlayTerminal[0].udp 	droppedPkWrongPort:count 	0
 attr interpolationmode  none
 attr title  "packets dropped (wrong port), count"
-scalar SimpleUnderlayNetwork.overlayTerminal[0].udp 	passedUpPk:count 	10
+scalar SimpleUnderlayNetwork.overlayTerminal[0].udp 	passedUpPk:count 	1
 attr interpolationmode  none
 attr title  "packets passed up, count"
-scalar SimpleUnderlayNetwork.overlayTerminal[0].udp 	sentPk:count 	10
+scalar SimpleUnderlayNetwork.overlayTerminal[0].udp 	sentPk:count 	1
 attr interpolationmode  none
 attr source  sentPk
 attr title  "packets sent, count"
-scalar SimpleUnderlayNetwork.overlayTerminal[0].udp 	sentPk:sum(packetBytes) 	1483
+scalar SimpleUnderlayNetwork.overlayTerminal[0].udp 	sentPk:sum(packetBytes) 	171
 attr interpolationmode  none
 attr source  sentPk
 attr title  "packets sent, sum(packetBytes)"
-scalar SimpleUnderlayNetwork.overlayTerminal[0].udp 	rcvdPk:count 	10
+scalar SimpleUnderlayNetwork.overlayTerminal[0].udp 	rcvdPk:count 	1
 attr interpolationmode  none
 attr source  rcvdPk
 attr title  "packets received, count"
-scalar SimpleUnderlayNetwork.overlayTerminal[0].udp 	rcvdPk:sum(packetBytes) 	660
+scalar SimpleUnderlayNetwork.overlayTerminal[0].udp 	rcvdPk:sum(packetBytes) 	93
 attr interpolationmode  none
 attr source  rcvdPk
 attr title  "packets received, sum(packetBytes)"
@@ -48,148 +48,23 @@ attr title  "packets dropped (checksum error), count"
 scalar SimpleUnderlayNetwork.overlayTerminal[1].udp 	droppedPkWrongPort:count 	0
 attr interpolationmode  none
 attr title  "packets dropped (wrong port), count"
-scalar SimpleUnderlayNetwork.overlayTerminal[1].udp 	passedUpPk:count 	5
+scalar SimpleUnderlayNetwork.overlayTerminal[1].udp 	passedUpPk:count 	1
 attr interpolationmode  none
 attr title  "packets passed up, count"
-scalar SimpleUnderlayNetwork.overlayTerminal[1].udp 	sentPk:count 	5
+scalar SimpleUnderlayNetwork.overlayTerminal[1].udp 	sentPk:count 	2
 attr interpolationmode  none
 attr source  sentPk
 attr title  "packets sent, count"
-scalar SimpleUnderlayNetwork.overlayTerminal[1].udp 	sentPk:sum(packetBytes) 	358
+scalar SimpleUnderlayNetwork.overlayTerminal[1].udp 	sentPk:sum(packetBytes) 	133
 attr interpolationmode  none
 attr source  sentPk
 attr title  "packets sent, sum(packetBytes)"
-scalar SimpleUnderlayNetwork.overlayTerminal[1].udp 	rcvdPk:count 	5
+scalar SimpleUnderlayNetwork.overlayTerminal[1].udp 	rcvdPk:count 	1
 attr interpolationmode  none
 attr source  rcvdPk
 attr title  "packets received, count"
-scalar SimpleUnderlayNetwork.overlayTerminal[1].udp 	rcvdPk:sum(packetBytes) 	491
+scalar SimpleUnderlayNetwork.overlayTerminal[1].udp 	rcvdPk:sum(packetBytes) 	171
 attr interpolationmode  none
 attr source  rcvdPk
 attr title  "packets received, sum(packetBytes)"
-scalar SimpleUnderlayNetwork.overlayTerminal[2].udp 	droppedPkBadChecksum:count 	0
-attr interpolationmode  none
-attr title  "packets dropped (checksum error), count"
-scalar SimpleUnderlayNetwork.overlayTerminal[2].udp 	droppedPkWrongPort:count 	0
-attr interpolationmode  none
-attr title  "packets dropped (wrong port), count"
-scalar SimpleUnderlayNetwork.overlayTerminal[2].udp 	passedUpPk:count 	9
-attr interpolationmode  none
-attr title  "packets passed up, count"
-scalar SimpleUnderlayNetwork.overlayTerminal[2].udp 	sentPk:count 	9
-attr interpolationmode  none
-attr source  sentPk
-attr title  "packets sent, count"
-scalar SimpleUnderlayNetwork.overlayTerminal[2].udp 	sentPk:sum(packetBytes) 	855
-attr interpolationmode  none
-attr source  sentPk
-attr title  "packets sent, sum(packetBytes)"
-scalar SimpleUnderlayNetwork.overlayTerminal[2].udp 	rcvdPk:count 	9
-attr interpolationmode  none
-attr source  rcvdPk
-attr title  "packets received, count"
-scalar SimpleUnderlayNetwork.overlayTerminal[2].udp 	rcvdPk:sum(packetBytes) 	896
-attr interpolationmode  none
-attr source  rcvdPk
-attr title  "packets received, sum(packetBytes)"
-scalar SimpleUnderlayNetwork.overlayTerminal[3].udp 	droppedPkBadChecksum:count 	0
-attr interpolationmode  none
-attr title  "packets dropped (checksum error), count"
-scalar SimpleUnderlayNetwork.overlayTerminal[3].udp 	droppedPkWrongPort:count 	0
-attr interpolationmode  none
-attr title  "packets dropped (wrong port), count"
-scalar SimpleUnderlayNetwork.overlayTerminal[3].udp 	passedUpPk:count 	3
-attr interpolationmode  none
-attr title  "packets passed up, count"
-scalar SimpleUnderlayNetwork.overlayTerminal[3].udp 	sentPk:count 	3
-attr interpolationmode  none
-attr source  sentPk
-attr title  "packets sent, count"
-scalar SimpleUnderlayNetwork.overlayTerminal[3].udp 	sentPk:sum(packetBytes) 	228
-attr interpolationmode  none
-attr source  sentPk
-attr title  "packets sent, sum(packetBytes)"
-scalar SimpleUnderlayNetwork.overlayTerminal[3].udp 	rcvdPk:count 	3
-attr interpolationmode  none
-attr source  rcvdPk
-attr title  "packets received, count"
-scalar SimpleUnderlayNetwork.overlayTerminal[3].udp 	rcvdPk:sum(packetBytes) 	435
-attr interpolationmode  none
-attr source  rcvdPk
-attr title  "packets received, sum(packetBytes)"
-scalar SimpleUnderlayNetwork.overlayTerminal[4].udp 	droppedPkBadChecksum:count 	0
-attr interpolationmode  none
-attr title  "packets dropped (checksum error), count"
-scalar SimpleUnderlayNetwork.overlayTerminal[4].udp 	droppedPkWrongPort:count 	0
-attr interpolationmode  none
-attr title  "packets dropped (wrong port), count"
-scalar SimpleUnderlayNetwork.overlayTerminal[4].udp 	passedUpPk:count 	4
-attr interpolationmode  none
-attr title  "packets passed up, count"
-scalar SimpleUnderlayNetwork.overlayTerminal[4].udp 	sentPk:count 	4
-attr interpolationmode  none
-attr source  sentPk
-attr title  "packets sent, count"
-scalar SimpleUnderlayNetwork.overlayTerminal[4].udp 	sentPk:sum(packetBytes) 	611
-attr interpolationmode  none
-attr source  sentPk
-attr title  "packets sent, sum(packetBytes)"
-scalar SimpleUnderlayNetwork.overlayTerminal[4].udp 	rcvdPk:count 	4
-attr interpolationmode  none
-attr source  rcvdPk
-attr title  "packets received, count"
-scalar SimpleUnderlayNetwork.overlayTerminal[4].udp 	rcvdPk:sum(packetBytes) 	527
-attr interpolationmode  none
-attr source  rcvdPk
-attr title  "packets received, sum(packetBytes)"
-scalar SimpleUnderlayNetwork.overlayTerminal[5].udp 	droppedPkBadChecksum:count 	0
-attr interpolationmode  none
-attr title  "packets dropped (checksum error), count"
-scalar SimpleUnderlayNetwork.overlayTerminal[5].udp 	droppedPkWrongPort:count 	0
-attr interpolationmode  none
-attr title  "packets dropped (wrong port), count"
-scalar SimpleUnderlayNetwork.overlayTerminal[5].udp 	passedUpPk:count 	1
-attr interpolationmode  none
-attr title  "packets passed up, count"
-scalar SimpleUnderlayNetwork.overlayTerminal[5].udp 	sentPk:count 	2
-attr interpolationmode  none
-attr source  sentPk
-attr title  "packets sent, count"
-scalar SimpleUnderlayNetwork.overlayTerminal[5].udp 	sentPk:sum(packetBytes) 	133
-attr interpolationmode  none
-attr source  sentPk
-attr title  "packets sent, sum(packetBytes)"
-scalar SimpleUnderlayNetwork.overlayTerminal[5].udp 	rcvdPk:count 	1
-attr interpolationmode  none
-attr source  rcvdPk
-attr title  "packets received, count"
-scalar SimpleUnderlayNetwork.overlayTerminal[5].udp 	rcvdPk:sum(packetBytes) 	356
-attr interpolationmode  none
-attr source  rcvdPk
-attr title  "packets received, sum(packetBytes)"
-scalar SimpleUnderlayNetwork.overlayTerminal[6].udp 	droppedPkBadChecksum:count 	0
-attr interpolationmode  none
-attr title  "packets dropped (checksum error), count"
-scalar SimpleUnderlayNetwork.overlayTerminal[6].udp 	droppedPkWrongPort:count 	0
-attr interpolationmode  none
-attr title  "packets dropped (wrong port), count"
-scalar SimpleUnderlayNetwork.overlayTerminal[6].udp 	passedUpPk:count 	1
-attr interpolationmode  none
-attr title  "packets passed up, count"
-scalar SimpleUnderlayNetwork.overlayTerminal[6].udp 	sentPk:count 	2
-attr interpolationmode  none
-attr source  sentPk
-attr title  "packets sent, count"
-scalar SimpleUnderlayNetwork.overlayTerminal[6].udp 	sentPk:sum(packetBytes) 	133
-attr interpolationmode  none
-attr source  sentPk
-attr title  "packets sent, sum(packetBytes)"
-scalar SimpleUnderlayNetwork.overlayTerminal[6].udp 	rcvdPk:count 	1
-attr interpolationmode  none
-attr source  rcvdPk
-attr title  "packets received, count"
-scalar SimpleUnderlayNetwork.overlayTerminal[6].udp 	rcvdPk:sum(packetBytes) 	356
-attr interpolationmode  none
-attr source  rcvdPk
-attr title  "packets received, sum(packetBytes)"
-scalar SimpleUnderlayNetwork.globalObserver.globalStatistics 	"GlobalStatistics: Simulation Time" 	5.997056085
+scalar SimpleUnderlayNetwork.globalObserver.globalStatistics 	"GlobalStatistics: Simulation Time" 	0.639875609
