@@ -40,6 +40,7 @@ std::ostream& operator<<(std::ostream& os, const PeerInfo info)
 {
     os << "ModuleId: " << info.moduleId;
     os << " TypeID: " << info.type;
+    os << " Malicious: " << (info.malicious ? "YES" : "NO");
 
     if (info.npsLayer >= 0) os << " NPS Layer: " << info.npsLayer;
     return os;
