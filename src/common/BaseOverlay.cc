@@ -355,6 +355,7 @@ void BaseOverlay::finish()
         globalStatistics->addStdDev("BaseOverlay: Sent Total Messages/s",
                                     (numAppDataSent + numAppLookupSent +
                                         numMaintenanceSent) / time);
+       /////////IMPORTANT////////////
         globalStatistics->addStdDev("BaseOverlay: Sent Total Bytes/s",
                                     (bytesAppDataSent + bytesAppLookupSent +
                                             bytesMaintenanceSent) / time);
@@ -638,7 +639,6 @@ void BaseOverlay::join(const OverlayKey& nodeID)
                                               isMalicious());
         }
     }
-
     joinOverlay();
 }
 

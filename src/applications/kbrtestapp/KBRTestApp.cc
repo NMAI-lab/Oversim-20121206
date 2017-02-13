@@ -422,7 +422,9 @@ void KBRTestApp::handleLookupResponse(LookupResponse* msg,
 {
     EV << "[KBRTestApp::handleLookupResponse() @ " << overlay->getThisNode().getIp()
        << " (" << overlay->getThisNode().getKey().toString(16) << ")]\n"
-       << "    Lookup response for key " << msg->getKey()<< " : ";
+       << "    Lookup response for key " << msg->getKey()<< " : Key Found in " << msg->getHopCount() << " hop(s)" <<"\n"
+       ;
+
 
     KbrRpcContext* kbrRpcContext = check_and_cast<KbrRpcContext*>(context);
 
@@ -431,6 +433,7 @@ void KBRTestApp::handleLookupResponse(LookupResponse* msg,
                 ((msg->getSiblingsArraySize() > 0) &&
                  (msg->getSiblings(0).getKey() == msg->getKey()) &&
                  (kbrRpcContext->getDestAddr() == msg->getSiblings(0))))) {
+            EV << "LOOKUP SUCCESSFUL" << endl;
             RECORD_STATS(numLookupSuccess++);
             RECORD_STATS(globalStatistics->recordOutVector(
                    "KBRTestApp: Lookup Success Latency", SIMTIME_DBL(latency)));
@@ -439,6 +442,7 @@ void KBRTestApp::handleLookupResponse(LookupResponse* msg,
             RECORD_STATS(globalStatistics->recordOutVector(
                     "KBRTestApp: Lookup Hop Count", msg->getHopCount()));
         } else {
+            EV << "LOOKUP FAILED" <<endl;
 #if 0
             if (!msg->getIsValid()) {
                 std::cout << "invalid" << std::endl;
@@ -644,6 +648,7 @@ void KBRTestApp::finishApp()
             globalStatistics->addStdDev("KBRTestApp: Failed Lookups/s",
                                         numLookupFailed / time);
             if (numLookupSent > 0) {
+                ///////////////IMPORTANT//////////////////
                 globalStatistics->addStdDev("KBRTestApp: Lookup Success Ratio",
                                             (float)numLookupSuccess /
                                             (float)numLookupSent);
