@@ -148,6 +148,7 @@ void Chord::joinForeignPartition(const NodeHandle &node)
 
     sendRouteRpcCall(OVERLAY_COMP, node, thisNode.getKey(),
                      call, NULL, routingType, joinDelay);
+
 }
 
 
@@ -790,6 +791,7 @@ void Chord::handleJoinTimerExpired(cMessage* msg)
     cancelEvent(join_timer);
     //put a bit of randomness in the delay
     scheduleAt(simTime() + truncnormal(joinDelay,joinDelay*0.1), msg);
+
 }
 
 

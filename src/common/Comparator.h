@@ -133,6 +133,26 @@ public:
 
 
 /**
+ * OverlayKey Unidirectional Ring Metric
+ */
+class KeyUniRingMetric
+{
+public:
+    /**
+     * calculates the distance from x to y on a unidirectional ring
+     *
+     * @param x origination key
+     * @param y destination key
+     * @return distance from x to y on a unidirectional ring
+     */
+    inline OverlayKey distance(const OverlayKey& x,
+                               const OverlayKey& y) const
+    {
+        return y-x;
+    }
+};
+
+/**
  * OverlayKey Clockwise Unidirectional Ring Metric
  */
 class KeyCwRingMetric

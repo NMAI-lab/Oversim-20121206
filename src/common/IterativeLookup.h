@@ -157,7 +157,8 @@ protected://fields
     int hopCountMax;               /**< maximum hop count */
     PendingPings pendingPings;              /**< number of pending ping calls */
 
-protected://methods
+    //12/14/2016 changed protected to public
+public://methods
     /**
      * adds a node to the siblings NodeVector
      *
@@ -212,6 +213,8 @@ protected://methods
      * @return true, if the node seems to be dead
      */
     bool getDead(const TransportAddress& addr);
+
+    const OverlayKey& getKey() const;
 
     //-------------------------------------------------------------------------
     //- Parallel RPC distribution ---------------------------------------------
