@@ -160,8 +160,10 @@ void BaseApp::handleMessage(cMessage* msg)
     } else if (msg->arrivedOn("from_upperTier")) {
         handleUpperMessage(msg);
     } else if (msg->arrivedOn("udpIn")) {
-    	cPacket* packet = check_and_cast<cPacket*>(msg);
-        RECORD_STATS(numUdpReceived++; bytesUdpReceived += packet->getByteLength());
+    	cPacket* packet = dynamic_cast<cPacket*>(msg);
+    	if (packet != NULL) {
+    	    RECORD_STATS(numUdpReceived++; bytesUdpReceived += packet->getByteLength());
+    	}
         // debug message
         if (debugOutput && !ev.isDisabled()) {
             UDPDataIndication* udpDataIndication =
@@ -503,7 +505,7 @@ void BaseApp::bindToPort(int port)
     socket.bind(thisNode.getIp(), port);
 }
 
-void BaseApp::sendMessageToUDP(const TransportAddress& destAddr, cPacket *msg)
+void BaseApp::sendMessageToUDP(const TransportAddress& destAddr, cPacket *msg, simtime_t delay)
 {
     // send message to UDP, with the appropriate control info attached
     msg->removeControlInfo();
