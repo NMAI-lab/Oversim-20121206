@@ -68,6 +68,7 @@ void DHT::initializeApp(int stage)
     secureMaintenance = par("secureMaintenance");
     invalidDataAttack = par("invalidDataAttack");
     maintenanceAttack = par("maintenanceAttack");
+    resolveToSelfAttack = par("resolveToSelfAttack");
 
     if ((int)numReplica > overlay->getMaxNumSiblings()) {
         opp_error("DHT::initialize(): numReplica bigger than what this "
@@ -429,12 +430,12 @@ void DHT::handleGetRequest(DHTGetCall* dhtMsg)
                                                    dhtMsg->getKind(),
                                                    dhtMsg->getId());
 
-    if (overlay->isMalicious() && invalidDataAttack) {
+    if (overlay->isMalicious() && (invalidDataAttack || resolveToSelfAttack)) {
         dataVect->resize(1);
         dataVect->at(0).setKey(dhtMsg->getKey());
         dataVect->at(0).setKind(dhtMsg->getKind());
         dataVect->at(0).setId(dhtMsg->getId());
-        dataVect->at(0).setValue("Modified Data");
+        dataVect->at(0).setValue(resolveToSelfAttack ? overlay->getThisNode().getIp().str() : "Modified data");
         dataVect->at(0).setTtl(3600*24*365);
         dataVect->at(0).setOwnerNode(overlay->getThisNode());
         dataVect->at(0).setIs_modifiable(false);

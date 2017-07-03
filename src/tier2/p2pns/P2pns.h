@@ -102,6 +102,8 @@ private:
     simtime_t keepaliveInterval; /**< interval between two keeaplive pings for active connections */
     simtime_t idCacheLifetime; /**< idle connections in the idCache get deleted after this time */
     OverlayKey thisId; /**< the 100 most significant bit of this node's nodeId */
+
+    bool resolveToSelfAttack;
 };
 
 #endif

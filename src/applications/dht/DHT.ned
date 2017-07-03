@@ -35,6 +35,7 @@ simple DHT extends BaseApp
         bool secureMaintenance; // use a secure maintenance algorithm based on majority decisions
         bool invalidDataAttack; // if node is malicious, it tries a invalidData attack
         bool maintenanceAttack; // if node is malicious, it tries a maintenance attack
+        bool resolveToSelfAttack; // if node is malicious, it tries a resolveToSelf attack (for use with P2pns)
 }
 
 //

@@ -33,6 +33,7 @@ simple P2pns extends BaseApp
         double keepaliveInterval @unit(s); // interval between two keeaplive pings for active connections
         double idCacheLifetime @unit(s); // idle connections in the idCache get deleted after this time
         string registerName; // register the P2PNS id under this name 
+        bool resolveToSelfAttack = default(false);
 }
 
 //

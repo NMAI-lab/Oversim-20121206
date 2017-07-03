@@ -48,6 +48,7 @@ void P2pns::initializeApp(int stage)
     twoStageResolution = par("twoStageResolution");
     keepaliveInterval = par("keepaliveInterval");
     idCacheLifetime = par("idCacheLifetime");
+    resolveToSelfAttack = par("resolveToSelfAttack");
 
     p2pnsCache = check_and_cast<P2pnsCache*> (getParentModule()->
             getSubmodule("p2pnsCache"));

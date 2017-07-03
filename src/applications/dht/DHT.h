@@ -121,6 +121,7 @@ private:
     bool secureMaintenance; /**< use a secure maintenance algorithm based on majority decisions */
     bool invalidDataAttack; /**< if node is malicious, it tries a invalidData attack */
     bool maintenanceAttack; /**< if node is malicious, it tries a maintenanceData attack */
+    bool resolveToSelfAttack; /**< if node is malicious, it tries a resolveToSelf attack (for use with P2pns) */
 
     typedef std::map<uint32_t, PendingRpcsEntry> PendingRpcs;
     PendingRpcs pendingRpcs; /**< a map of all pending RPC operations */
