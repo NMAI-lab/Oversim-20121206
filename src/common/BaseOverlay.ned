@@ -32,7 +32,8 @@ simple BaseOverlay extends BaseRpc
         int overlayId; // identifies the overlay this node belongs to (used for multiple overlays)
         bool debugOutput; // enable debug output
         int keyLength; // overlay key length in bits
-        string nodeId; // optional nodeId as string in hexadecimal notation 
+        string nodeId; // optional nodeId as string in hexadecimal notation
+        string nodeHandle; // allows to specify which interface a node uses to join the overlay 
         bool useCommonAPIforward; // enable CommonAPI forward() calls
         bool drawOverlayTopology; // draw arrow to successor node?
         int hopCountMax; // maximum number of overlay hops

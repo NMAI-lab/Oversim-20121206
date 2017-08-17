@@ -250,9 +250,12 @@ void GlobalNodeList::registerPeer(const NodeHandle& peer,
 {
     PeerHashMap::iterator it = peerStorage.find(peer.getIp());
 
-    if (it == peerStorage.end()) {
-        throw cRuntimeError("GlobalNodeList::registerPeer(): "
-                "Peer is not in peer set");
+    if (it == peerStorage.end()){
+        EV << "GlobalNodeList::registerPeer(): \n"
+                <<"Peer is not in peer set" << endl;
+        return;
+// TODO       throw cRuntimeError("GlobalNodeList::registerPeer(): "
+//                "Peer is not in peer set");
     } else {
         peerStorage.registerOverlay(it, peer, overlayId);
         peerStorage.setBootstrapped(it, overlayId, true);
@@ -530,8 +533,10 @@ std::vector<IPvXAddress>* GlobalNodeList::getAllIps()
 NodeHandle* GlobalNodeList::getNodeHandle(const IPvXAddress& address){
     PeerHashMap::iterator it = peerStorage.find(address);
     if (it == peerStorage.end()) {
-        throw cRuntimeError("GlobalNodeList::getNodeHandle(const IPvXAddress& address): "
-                            "Peer is not in peer set");
+        //TODO
+//        throw cRuntimeError("GlobalNodeList::getNodeHandle(const IPvXAddress& address): "
+//                            "Peer is not in peer set");
+        return 0;
     }
 
     BootstrapEntry* tempEntry = &(it->second);

@@ -240,10 +240,27 @@ void BaseOverlay::initialize(int stage)
             WATCH(bytesInternalReceived);
         }
 
-        // set up local nodehandle
-        thisNode.setIp(IPvXAddressResolver().
-                      addressOf(getParentModule()->getParentModule()));
-        thisNode.setKey(OverlayKey::UNSPECIFIED_KEY);
+//        // set up local nodehandle
+//        thisNode.setIp(IPvXAddressResolver().
+//                      addressOf(getParentModule()->getParentModule()));
+//        thisNode.setKey(OverlayKey::UNSPECIFIED_KEY);
+//
+        // set up local nodeHandle (optional)
+
+        std::string NodeId = par("nodeHandle").stdstringValue();
+
+        if (NodeId.size()) {
+            // manual configuration of nodeHandle in ini file
+            IPv4Address addr =
+                    IPvXAddressResolver().resolve(NodeId.c_str()).get4();
+            thisNode.setIp(addr);
+            thisNode.setKey(OverlayKey::UNSPECIFIED_KEY);
+        } else {
+            thisNode.setIp(
+                    IPvXAddressResolver().addressOf(
+                            getParentModule()->getParentModule()));
+            thisNode.setKey(OverlayKey::UNSPECIFIED_KEY);
+        }
 
         state = INIT;
         internalReadyState = false;
@@ -612,10 +629,22 @@ void BaseOverlay::join(const OverlayKey& nodeID)
 
     if (state != READY) {
         // set nodeID and IP
-        thisNode.setIp(
-                IPvXAddressResolver().addressOf(getParentModule()->getParentModule()));
+//        thisNode.setIp(
+//                IPvXAddressResolver().addressOf(getParentModule()->getParentModule()));
+        std::string NodeId = par("nodeHandle").stdstringValue();
 
-        if (!nodeID.isUnspecified())  {
+        if (NodeId.size()) {
+            // manual configuration of nodeHandle in ini file
+            IPv4Address addr =
+                    IPvXAddressResolver().resolve(NodeId.c_str()).get4();
+            thisNode.setIp(addr);
+        } else {
+            thisNode.setIp(
+                    IPvXAddressResolver().addressOf(
+                            getParentModule()->getParentModule()));
+        }
+
+        if (!nodeID.isUnspecified()) {
             thisNode.setKey(nodeID);
         } else if (thisNode.getKey().isUnspecified()) {
             std::string nodeIdStr = par("nodeId").stdstringValue();
