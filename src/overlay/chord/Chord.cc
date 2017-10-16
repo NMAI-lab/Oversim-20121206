@@ -560,8 +560,8 @@ NodeVector* Chord::findNode(const OverlayKey& key,
         return new NodeVector();
 
     if (successorList->isEmpty() && !predecessorNode.isUnspecified()) {
-        throw new cRuntimeError("Chord: Node is READY, has a "
-                                "predecessor but no successor!");
+// TODO      throw new cRuntimeError("Chord: Node is READY, has a "
+//                                "predecessor but no successor!");
         join();
         return new NodeVector();
     }
