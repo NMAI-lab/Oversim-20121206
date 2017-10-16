@@ -241,19 +241,11 @@ void BaseOverlay::initialize(int stage)
         }
 
 //        // set up local nodehandle
-//        thisNode.setIp(IPvXAddressResolver().
-//                      addressOf(getParentModule()->getParentModule()));
-//        thisNode.setKey(OverlayKey::UNSPECIFIED_KEY);
-//
-        // set up local nodeHandle (optional)
-
-        std::string NodeId = par("nodeHandle").stdstringValue();
-
-        if (NodeId.size()) {
-            // manual configuration of nodeHandle in ini file
-            IPv4Address addr =
-                    IPvXAddressResolver().resolve(NodeId.c_str()).get4();
-            thisNode.setIp(addr);
+        const char *interface = par("overlayInterface");
+        if (strcmp(interface, "") != 0) {
+            // manual configuration of overlay interface in INI file
+            thisNode.setIp(IPvXAddressResolver().addressOf(
+                    getParentModule()->getParentModule(), interface));
             thisNode.setKey(OverlayKey::UNSPECIFIED_KEY);
         } else {
             thisNode.setIp(
@@ -629,19 +621,16 @@ void BaseOverlay::join(const OverlayKey& nodeID)
 
     if (state != READY) {
         // set nodeID and IP
-//        thisNode.setIp(
-//                IPvXAddressResolver().addressOf(getParentModule()->getParentModule()));
-        std::string NodeId = par("nodeHandle").stdstringValue();
-
-        if (NodeId.size()) {
-            // manual configuration of nodeHandle in ini file
-            IPv4Address addr =
-                    IPvXAddressResolver().resolve(NodeId.c_str()).get4();
-            thisNode.setIp(addr);
+        const char *interface = par("overlayInterface");
+        if (strcmp(interface, "") != 0) {
+            // manual configuration of overlay interface in INI file
+            thisNode.setIp(IPvXAddressResolver().addressOf(getParentModule()->getParentModule(), interface));
+            thisNode.setKey(OverlayKey::UNSPECIFIED_KEY);
         } else {
             thisNode.setIp(
                     IPvXAddressResolver().addressOf(
                             getParentModule()->getParentModule()));
+            thisNode.setKey(OverlayKey::UNSPECIFIED_KEY);
         }
 
         if (!nodeID.isUnspecified()) {
@@ -1098,8 +1087,15 @@ void BaseOverlay::receiveChangeNotification(int category, const cPolymorphic * d
 void BaseOverlay::handleTransportAddressChangedNotification()
 {
     // get new ip address
-    thisNode.setIp(IPvXAddressResolver().addressOf(
-                      getParentModule()->getParentModule()));
+    const char *interface = par("overlayInterface");
+    if (strcmp(interface, "") != 0) {
+        thisNode.setIp(IPvXAddressResolver().addressOf(
+                getParentModule()->getParentModule(), interface));
+    } else {
+        thisNode.setIp(
+                IPvXAddressResolver().addressOf(
+                        getParentModule()->getParentModule()));
+    }
 
     joinOverlay();
 }
